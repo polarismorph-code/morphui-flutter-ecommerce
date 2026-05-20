@@ -7,7 +7,7 @@
 **Every Morph SDK feature, one app, one checkout.**
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.10%2B-02569B?logo=flutter)](https://flutter.dev)
-[![SDK](https://img.shields.io/badge/morphui-0.1.2-4F46E5)](https://pub.dev/packages/morphui)
+[![SDK](https://img.shields.io/badge/morphui-0.1.3-4F46E5)](https://pub.dev/packages/morphui)
 [![License](https://img.shields.io/badge/license-MIT-06B6D4)](LICENSE)
 
 [SDK docs](https://morphui.dev/docs/flutter) · [pub.dev](https://pub.dev/packages/morphui) · [Dashboard](https://app.morphui.dev/dashboard)
@@ -32,17 +32,16 @@ No toy examples. No stubs. Each feature has an exact test path described below.
 | 6 | Battery-aware UI (`BatteryAwareWidget`) | Pro | Catalog |
 | 7 | Interruption recovery — checkout (`morphSetCheckoutMultiStepContext`) | Pro | Checkout |
 | 8 | Recovery card refusal → restart (`onSuggestionRefused`) | Pro | Checkout |
-| 9 | Fatigue detection — banner + simplified form (`FatigueAdaptiveForm`) | Agency | Checkout |
-| 10 | Analytics consent toggle | Agency | Settings |
+| 9 | Fatigue detection — banner + simplified form (`FatigueAdaptiveForm`) | Business | Checkout |
+| 10 | Analytics consent toggle | Business | Settings |
 
 ---
 
 ## Prerequisites
 
 - Flutter 3.10+, Dart 3+
-- The SDK lives at `../chameleon_flutter` (path dependency — same parent folder)
-- Physical device recommended. Grip detection and battery signals don't work on emulators.
-- Android or iOS — both work. Samsung tested on SM-S921B.
+- Physical device recommended for grip detection and battery signals — emulators don't expose those sensors.
+- Android or iOS — both work. Samsung SM-S921B tested.
 
 ---
 
@@ -55,14 +54,14 @@ flutter pub get
 flutter run
 ```
 
-> The app uses a local `path:` dependency on `../chameleon_flutter`.
-> Once the SDK ships on pub.dev, replace with `morphui: ^0.1.2` in `pubspec.yaml`.
-
 ---
 
 ## Demo configuration
 
 Two `MorphConfig` flags are active in this demo. **Remove them before shipping to production.**
+
+> `MorphConfig` dev flags are for demonstration only and are not documented in the public API.
+> Remove both before shipping to production.
 
 ```dart
 // lib/main.dart
@@ -128,6 +127,10 @@ extension ThemeColors on BuildContext {
   // ...
 }
 ```
+
+> **Note:** `ThemeColors` is a `BuildContext` extension added in this demo — it is not part of the
+> Morph SDK. The equivalent Morph API is `context.morphPalette` and `AppColors.backgroundOf(context)`.
+> See [AppColors integration](https://morphui.dev/docs/flutter#app-colors).
 
 **How to test**
 Toggle dark mode while browsing any screen. Headings, subtitles, borders,
@@ -249,6 +252,11 @@ void _completeStep(int step, Map<String, dynamic> data) {
   _declareStep();
 }
 ```
+
+> **Note:** `morphSetCheckoutMultiStepContext` is a convenience wrapper around `morphSetKycContext`
+> scoped to checkout flows. See
+> [Multi-step workflows](https://morphui.dev/docs/flutter#recovery-workflows)
+> for the full API reference.
 
 **How to test**
 1. Start checkout → fill **Shipping** → tap **Continue to payment**.
