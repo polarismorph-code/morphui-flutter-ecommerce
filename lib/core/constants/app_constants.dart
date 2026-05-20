@@ -5,7 +5,7 @@ class AppConstants {
 
   // Demo license key — points at the FREE tier so the Pro features
   // print upgrade hints in debug logs but never block the UI.
-  static const String morphLicenseKey = 'cha-pro-25877f582362';
+  static const String morphLicenseKey = 'cha-free-demo';
 
   // MorphZone IDs used on the home screen — must stay stable so the
   // scorer's history survives reorders.
